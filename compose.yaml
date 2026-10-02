@@ -1,0 +1,58 @@
+services:
+
+  api:
+    image: smoking-api
+    ports:
+      - "8000:8000"
+    environment:
+      DETECTOR_CONF_THRESHOLD: "0.25"
+      MEDIA_DIR: "/app/media"
+      PUBLIC_BASE_URL: "http://localhost:8000"
+      DB_PATH: "/app/alerts.db"
+    volumes:
+      - ./alerts.db:/app/alerts.db
+      - ./media:/app/media
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  camera-worker:
+    image: smoking-api
+    command: ["python", "/app/camera_worker.py"]
+    environment:
+      API_URL: "http://api:8000"
+      VIDEO_PATH: "/videos/00001_00001_Rich_smoking_experience_smoke_h_nm_np1_fr_med_1.avi"
+      ZONE_ID: "zone_1"
+      CLIP_SECONDS: "2"
+      FALLBACK_FPS: "15"
+      RESTART_DELAY: "1"
+    volumes:
+      - ./camera_worker.py:/app/camera_worker.py:ro
+      - ./videos:/videos:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      GF_INSTALL_PLUGINS: "yesoreyeram-infinity-datasource"
+    restart: unless-stopped
+
+volumes:
+  grafana_data:

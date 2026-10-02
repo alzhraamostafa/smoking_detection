@@ -1,0 +1,16 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+*.avi
+*.mp4
+*.mov
+*.mkv
+*.log
+*.tmp
+*.backup
+video_utils.py.backup
+alerts.db

@@ -1,0 +1,7 @@
+services:
+  grafana:
+    environment:
+      GF_INSTALL_PLUGINS: "yesoreyeram-infinity-datasource,volkovlabs-image-panel"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards

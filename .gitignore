@@ -1,0 +1,47 @@
+# --- Python environment ---
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# --- Model weights (large binary files, don't belong in git) ---
+models/
+*.pt
+*.pth
+
+# --- Datasets (large, and often under their own license — don't commit) ---
+data/
+data_reality2/
+behavior_dataset/
+behavior_dataset_balanced/
+kaggle_smoking/
+*.zip
+
+# --- Generated / runtime artifacts ---
+alerts.db
+preview/
+test_predictions/
+threshold_sweep.png
+videos/
+media/
+
+# --- Docker compose backups / experimentation history ---
+compose.yaml.backup
+compose.yaml.before_dashboard
+compose.yaml.before_media
+compose.yaml.pre_dedup.backup
+*.backup
+
+# --- Editor / OS junk ---
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+.env
+smoking-detector-v2/
+app/*.backup
+app/*.before_*
+app/*.pre_dedup.backup

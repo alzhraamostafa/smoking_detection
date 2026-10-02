@@ -1,0 +1,10 @@
+apiVersion: 1
+
+datasources:
+  - name: Smoking API Auto
+    uid: smoking-api-auto
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    url: http://api:8000
+    isDefault: false
+    editable: true
